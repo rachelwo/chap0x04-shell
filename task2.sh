@@ -8,8 +8,6 @@ be2030=0
 by30=0
 old=0
 young=100
-oldname=" "
-youngname=" "
 for i in ${age} ;
 	do  
        		if [ "$i"  -lt 20 ]; then
@@ -62,19 +60,32 @@ do
 done
 min=100
 max=0
-minn=''
-maxn=''
+minn=()
+maxn=()
 for na in $name;
 do
-	if [ ${#na} -gt $max ];then
-		max=${#na}
-		maxn="$na"
-	fi
-	if [ ${#na} -lt $min ];then
-		min=${#na}
-		minn="$na"
-	fi
-	
+	len=${#na}
+    
+    if [[ "$len" -lt "$min" ]];then
+      min=$len
+      minn=("$na")
+    elif [[ "$len" -eq "$mim" ]];then
+      minn=("${minn[@]}" "$na")
+    fi
+
+    if [[ "$len" -gt "$max" ]];then
+      max="$len"
+      maxn=("$na")
+    elif [[ "$len" -eq "$max" ]];then
+      maxn=("${maxn[@]}" "$na")
+    fi	
 done
-echo "$max '$maxn'"
-echo "$min '$minn'"
+printf "\nthe player with the longest name(length:%s): \n" "$max"
+for i in "${maxn[@]}"; do
+  printf "$i\n"
+done
+
+printf "\nthe player with the shortest name(length:%s): \n" "$min"
+for i in "${minn[@]}"; do
+  printf "$i\n"
+done
